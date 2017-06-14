@@ -160,8 +160,8 @@ public class SolutionIT {
     public void notLoggedIn_checkCurrentPage() {
         assertUrlEquals("http://whipbird.mattcalthrop.com/#!/login");
         assertTitleEquals("whipbird: log in");
-
-//        Page heading (text at top left of page, below navigation bar) should be set correctly.
+        assertElementTextEquals(By.tagName("h4"), "Log in");
+        assertElementTextEquals(By.id("footer-right"), "");
 //        Page footer (right) should be empty.
 //        // TODO
 
