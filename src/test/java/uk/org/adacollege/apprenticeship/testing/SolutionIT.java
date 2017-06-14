@@ -162,14 +162,15 @@ public class SolutionIT {
         assertTitleEquals("whipbird: log in");
         assertElementTextEquals(By.tagName("h4"), "Log in");
         assertElementTextEquals(By.id("footer-right"), "");
-//        Page footer (right) should be empty.
-//        // TODO
-
     }
 
     // Step 3
     @Test
     public void notLoggedIn_clickAboutMenu() {
+        driver.findElement(By.id(aboutMenuId)).click();
+        assertUrlEquals("http://whipbird.mattcalthrop.com/#!/about");
+        assertTitleEquals("whipbird: about");
+        assertElementTextEquals(By.tagName("h4"), "About this app");
         // TODO
     }
 
