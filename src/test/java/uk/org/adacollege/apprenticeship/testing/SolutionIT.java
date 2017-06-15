@@ -29,6 +29,8 @@ public class SolutionIT {
     private static String logInButtonId = "login-button";
     private static String logOutButtonId = "log-out-button";
     private static String popupMessageId = "popup-message";
+    private static String nameTagId="name";
+    private static String ageTagId="age";
 
     // ========= UTILITY METHODS =========
 
@@ -117,13 +119,26 @@ public class SolutionIT {
         assertTrue(result);
     }
 
+    private static void clickElement(String expectedElement){
+        wait.until(presenceOfElementLocated(By.id(expectedElement)));
+        driver.findElement(By.id(expectedElement)).click();
+    }
+
+    private static void  deleteBirds(){
+        int numberOfBirds = driver.findElements(By.id("delete-whipbird-button-0")).size();
+        while (numberOfBirds > 0) {
+            clickElement("delete-whipbird-button-0");
+                    numberOfBirds = driver.findElements(By.id("delete-whipbird-button-0")).size();
+        }
+    }
+
     // ========= SCAFFOLDING =========
 
     @BeforeClass
     public static void beforeAll() {
         startUrl = "http://whipbird.mattcalthrop.com/";
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 5);
+        wait = new WebDriverWait(driver, 10);
     }
 
     @AfterClass
@@ -225,7 +240,21 @@ public class SolutionIT {
     // Step 8
     @Test
     public void loggedIn_addNewWhipbird() {
-        // TODO
+        logIn(true);
+        deleteBirds();
+        wait.until(presenceOfElementLocated(By.id(nameTagId)));
+        driver.findElement(By.id(nameTagId)).sendKeys("Jack");
+        wait.until(presenceOfElementLocated(By.id(ageTagId)));
+        driver.findElement(By.id(ageTagId)).sendKeys("18");
+        wait.until(presenceOfElementLocated(By.id("add-new-whipbird-button")));
+        clickElement("add-new-whipbird-button");
+        wait.until(presenceOfElementLocated(By.id("delete-whipbird-button-0")));
+        assertElementTextEquals(By.id(popupMessageId), "Whipbird added: Jack");
+
+
+//        Specific feedback message should be displayed.
+//        The name of the whipbird just created should exist on the page
+
     }
 
     // Step 9
