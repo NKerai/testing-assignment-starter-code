@@ -167,17 +167,25 @@ public class SolutionIT {
     // Step 3
     @Test
     public void notLoggedIn_clickAboutMenu() {
+        wait.until(presenceOfElementLocated(By.id(aboutMenuId)));
         driver.findElement(By.id(aboutMenuId)).click();
         assertUrlEquals("http://whipbird.mattcalthrop.com/#!/about");
         assertTitleEquals("whipbird: about");
         assertElementTextEquals(By.tagName("h4"), "About this app");
-        // TODO
     }
 
     // Step 4
     @Test
     public void notLoggedIn_logInWithIncorrectCredentials() {
-        // TODO
+        logIn(false);
+        assertElementPresent(logInMenuId);
+        assertElementPresent(aboutMenuId);
+        assertElementNotPresent(myWhipbirdsMenuId);
+        assertElementNotPresent(logOutMenuId);
+        assertUrlEquals("http://whipbird.mattcalthrop.com/#!/login");
+        assertElementTextEquals(By.id("footer-right"), "");
+        assertTitleEquals("whipbird: log in");
+        assertElementTextEquals(By.id("popup-message"), "Username or password incorrect");
     }
 
     // --------- WHEN LOGGED IN ---------
@@ -186,7 +194,10 @@ public class SolutionIT {
     @Test
     public void loggedIn_checkMenus() {
         logIn(true);
-        // TODO
+        assertElementPresent(logOutMenuId);
+        assertElementPresent(aboutMenuId);
+        assertElementPresent(myWhipbirdsMenuId);
+        assertElementNotPresent(logInMenuId);
     }
 
     // Step 6
