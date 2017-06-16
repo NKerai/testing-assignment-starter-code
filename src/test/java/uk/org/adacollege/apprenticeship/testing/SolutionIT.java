@@ -250,16 +250,26 @@ public class SolutionIT {
         clickElement("add-new-whipbird-button");
         wait.until(presenceOfElementLocated(By.id("delete-whipbird-button-0")));
         assertElementTextEquals(By.id(popupMessageId), "Whipbird added: Jack");
-
-
-//        Specific feedback message should be displayed.
-//        The name of the whipbird just created should exist on the page
-
     }
 
     // Step 9
     @Test
     public void loggedIn_addNewWhipbirdThenDeleteIt() {
-        // TODO
+        logIn(true);
+        wait.until(presenceOfElementLocated(By.id(nameTagId)));
+        driver.findElement(By.id(nameTagId)).sendKeys("Jack");
+        wait.until(presenceOfElementLocated(By.id(ageTagId)));
+        driver.findElement(By.id(ageTagId)).sendKeys("18");
+        wait.until(presenceOfElementLocated(By.id("add-new-whipbird-button")));
+        clickElement("add-new-whipbird-button");
+        wait.until(presenceOfElementLocated(By.id("delete-whipbird-button-0")));
+        clickElement("delete-whipbird-button-0");
+        assertElementTextEquals(By.id(popupMessageId), "Whipbird deleted: Jack");
+
+
+//        TODO
+//        Specific feedback message should be displayed after new whipbird has been deleted.
+//        The name of the whipbird created should NOT exist on the page.
+
     }
 }
